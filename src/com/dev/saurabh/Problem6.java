@@ -218,6 +218,8 @@ public class Problem6 {
         }
 
         System.out.println(out.toString()) ;
+        if(result.length == 1 && !isLastOut)
+            System.out.println();
        // else  System.out.print(out);
     }
 
