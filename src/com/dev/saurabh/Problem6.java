@@ -41,6 +41,8 @@ public class Problem6 {
                 expressionsList.add(consoleReader.readLine());
             }
             System.out.println();
+            int counter = 1;
+
             for(String expression : expressionsList)
             {
                 String [] operands = expression.split(pattern);
@@ -56,26 +58,28 @@ public class Problem6 {
                 String result = "";
                 char [] firstOperandCharArray = firstOperand.toCharArray();
                 char [] secondOperandCharArray = secondOperand.toCharArray();
+                //System.out.println(expressionsList.size());
                 switch(operator)
                 {
                     case '+':
                         result = add(firstOperandCharArray, secondOperandCharArray);
-                        displayFormattedOutput(firstLine, secondLine, result);
+                        displayFormattedOutput(firstLine, secondLine, result, (counter==expressionsList.size()));
                         break;
                     case '-':
                         result = sub(firstOperandCharArray, secondOperandCharArray);
-                        displayFormattedOutput(firstLine, secondLine, result);
+                        displayFormattedOutput(firstLine, secondLine, result, (counter==expressionsList.size()));
                         break;
                     case '*':
                         String [] results ;
                         StringBuilder sum = new StringBuilder();
                         results = multiply(firstOperandCharArray, secondOperandCharArray, sum);
-                        displayFormattedOutput(firstLine, secondLine, results, sum);
+                        displayFormattedOutput(firstLine, secondLine, results, sum, (counter==expressionsList.size()));
                         break;
                 }
-
-                System.out.println();
+                counter++;
+               // System.out.println();
             }
+            //System.out.println();
         }
         catch(Exception exc)
         {
@@ -153,7 +157,7 @@ public class Problem6 {
         }
     }
 
-    private static void displayFormattedOutput(StringBuilder firstLine, StringBuilder secondLine, String[] result, StringBuilder sum)
+    private static void displayFormattedOutput(StringBuilder firstLine, StringBuilder secondLine, String[] result, StringBuilder sum, boolean isLastOut)
     {
         int resultLength = sum.length();// result[0].length()+result.length-1;
         int firstDashLength = result[0].trim().length();
@@ -193,7 +197,8 @@ public class Problem6 {
             {
                 out.append(" ");
             }
-            out.append(str).append("\n");
+            out.append(str);
+            if(result.length>1)out.append("\n");
         }
         if(result.length >  1)
         {
@@ -209,12 +214,14 @@ public class Problem6 {
             }
             //System.out.print(sum);
             out.append(sum);
+            if(!isLastOut)out.append("\n");
         }
 
-        System.out.println(out) ;
+        System.out.println(out.toString()) ;
+       // else  System.out.print(out);
     }
 
-    private static void displayFormattedOutput(StringBuilder firstLine, StringBuilder secondLine, String result)
+    private static void displayFormattedOutput(StringBuilder firstLine, StringBuilder secondLine, String result, boolean isLastOut)
     {
         int resultLength = result.length();
         int highestLength = (resultLength >= firstLine.length())?(resultLength >= secondLine.length() ? resultLength : secondLine.length()):
@@ -248,6 +255,7 @@ public class Problem6 {
         }
         //System.out.println(result);
         out.append(result);
+        if(!isLastOut)out.append("\n");
         System.out.println(out);
     }
 
