@@ -26,11 +26,12 @@ public class Problem2_V2 {
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
         try{
 
-            int[] primeNumbers = new int[4000];
+            int[] primeNumbers = new int[4000]; //speculated number of primes
             int primeCount = 0;
 
-            primeNumbers[primeCount++] = 2;
-            int numberToLookUpTo = 32000;
+            primeNumbers[primeCount++] = 2;//only even prime
+            int numberToLookUpTo = 32000;  //32000 because 320000 ner round-off of sqrt(1000000000) where 1000000000 is
+            //largest input
             for (int num = 3; num <= numberToLookUpTo; num = num + 2) {
                 boolean wasPrime = true;
                 int numberToCheckTill = (int) Math.sqrt(num);
