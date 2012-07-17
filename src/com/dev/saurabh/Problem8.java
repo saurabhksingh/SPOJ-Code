@@ -2,6 +2,7 @@ package com.dev.saurabh;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -14,6 +15,11 @@ import java.util.Arrays;
  */
 public class Problem8
 {
+    /**
+     *
+     * I will be making use of method of finite differences:
+     * (http://en.wikipedia.org/wiki/Difference_engine#Method_of_differences)
+     */
     public static void main(String [] args)
     {
         try
@@ -26,17 +32,19 @@ public class Problem8
                 input[i][0] = consoleReader.readLine();
                 input[i][1] = consoleReader.readLine();
             }
-            //System.out.println();
+            System.out.println();
 
             for(int i=0; i<numberOfTestCases; i++)
             {
                 String [] inputs = input[i][0].split(" ");
                 int numberOfInputs = Integer.parseInt(inputs[0].trim());
                 int numberOfOutputsRequired = Integer.parseInt(inputs[1].trim());
+                StringBuilder out = new StringBuilder();
+
                 if(numberOfInputs == 1)
                 {
                     String sampleInput = input[i][1].trim();
-                    StringBuilder out = new StringBuilder();
+
                     for(int j=0; j<numberOfOutputsRequired-1; j++)
                     {
                       out.append(sampleInput).append(" ");
@@ -46,32 +54,47 @@ public class Problem8
                 }
                 else
                 {
+                    ArrayList <Long> diagonalNumbers = new ArrayList<Long>();
+                    int numberOfOutputs = Integer.parseInt(input[i][0].split(" ")[1]);
                     String [] sampleInputText = input[i][1].split(" ");
-                    int []  sampleInput = new int[sampleInputText.length];
+                    long []  sampleInput = new long[sampleInputText.length];
                     int count = 0;
                     for(String in: sampleInputText)
                     {
                         sampleInput[count++] = Integer.parseInt(in);
                     }
-                    int [] inputCopy = Arrays.copyOf(sampleInput, sampleInput.length);
+                    long [] inputCopy = Arrays.copyOf(sampleInput, sampleInput.length);
                     int start = 1;
                     int polynomialOrder = 0;
-
-                    while(!notAllEqual(inputCopy, start))
+                    diagonalNumbers.add(inputCopy[inputCopy.length-1]);
+                    int length = inputCopy.length;
+                    while(!notAllEqual(inputCopy, length))
                     {
-                        int prev = inputCopy[start-1];
-                        int current = 0;
-
-                        for(int k=start; k<inputCopy.length; k++)
+                        for(int k=0; k<length-1; k++)
                         {
-                            current = inputCopy[k];
-                            inputCopy[k] = inputCopy[k]-prev;
-                            prev = current;
+                            inputCopy[k] = inputCopy[k+1]  - inputCopy[k];
                         }
                         start++;
+                       // System.out.println(inputCopy[length-2]);
+                        diagonalNumbers.add(inputCopy[length-2]);
+                        length--;
                         polynomialOrder++;
                     }
-                    int [] polynomialEquation = getEquationCoefficients(sampleInput, polynomialOrder);
+                   // diagonalNumbers.add(inputCopy[0]);
+                    //System.out.println(inputCopy[0]);
+
+                    for(int k=0; k<numberOfOutputs; k++)
+                    {
+                       long prev = diagonalNumbers.get(diagonalNumbers.size()-1);
+                       for(int l=diagonalNumbers.size()-2; l>=0; l--)
+                       {
+                           prev += diagonalNumbers.get(l);
+                           diagonalNumbers.set(l,prev);
+                       }
+                       out.append(prev).append(" ");
+                    }
+                    System.out.println(out);
+                    long [] polynomialEquation = getEquationCoefficients(sampleInput, polynomialOrder);
                 }
             }
         }
@@ -81,8 +104,8 @@ public class Problem8
         }
     }
 
-    private static int[] getEquationCoefficients(int[] sampleInput, int polynomialOrder) {
-        int [] result = new int[polynomialOrder+1];
+    private static long[] getEquationCoefficients(long [] sampleInput, int polynomialOrder) {
+        long [] result = new long[polynomialOrder+1];
         //if polynomialOrder is 3 the result array should be of size 4 containing a,b,c,d of ax3+ bx2+ cx+ d
 
         result[0] = sampleInput[0];//value of d when x is 0
@@ -91,15 +114,17 @@ public class Problem8
         return result;
     }
 
-    private static boolean notAllEqual(int[] inputCopy, int start) {
+    private static boolean notAllEqual(long[] inputCopy, long length) {
         boolean result = true;
-
-        for(int i=start; i<inputCopy.length-1; i++)
+        if(length > 1)
         {
-            result = result && (inputCopy[start]== inputCopy[start+1]);
-            if(!result)
+            for(long i=0; i<length-1; i++)
             {
-                break;
+                result = result && (inputCopy[(int)i]== inputCopy[(int)i+1]);
+                if(!result)
+                {
+                    break;
+                }
             }
         }
 
