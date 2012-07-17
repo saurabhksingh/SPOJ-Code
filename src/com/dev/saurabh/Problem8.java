@@ -94,7 +94,6 @@ public class Problem8
                        out.append(prev).append(" ");
                     }
                     System.out.println(out);
-                    long [] polynomialEquation = getEquationCoefficients(sampleInput, polynomialOrder);
                 }
             }
         }
@@ -102,16 +101,6 @@ public class Problem8
         {
           exc.printStackTrace();
         }
-    }
-
-    private static long[] getEquationCoefficients(long [] sampleInput, int polynomialOrder) {
-        long [] result = new long[polynomialOrder+1];
-        //if polynomialOrder is 3 the result array should be of size 4 containing a,b,c,d of ax3+ bx2+ cx+ d
-
-        result[0] = sampleInput[0];//value of d when x is 0
-
-
-        return result;
     }
 
     private static boolean notAllEqual(long[] inputCopy, long length) {
