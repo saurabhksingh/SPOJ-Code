@@ -23,14 +23,27 @@ int gcd(int first,int second) {
 int getPourSteps(int from, int to, int target)
 {
 	int result = 0,tmp_from = 0,tmp_to = 0;
-    while(true) {
-        if (tmp_from==target || tmp_to==target) return result;
-        if (tmp_to==to) tmp_to = 0;
-        else if (tmp_from==0) tmp_from = from;
-        else {
-            int delta = min(to-tmp_to,tmp_from);
-            tmp_from -= delta; tmp_to += delta;
+    while(true)
+    {
+        if (tmp_from == target || tmp_to == target)
+        {
+             return result;
         }
+        else if (tmp_to == to)
+        {
+             tmp_to = 0;
+        }
+        else if (tmp_from == 0)
+        {
+            tmp_from = from;
+        }
+        else
+        {
+            int delta = min(to - tmp_to, tmp_from);
+            tmp_from -= delta;
+            tmp_to += delta;
+        }
+
         result++;
     }
 }
