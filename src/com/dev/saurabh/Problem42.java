@@ -25,8 +25,13 @@ public class Problem42 {
             {
                 String input = consoleReader.readLine();
                 String [] args = input.split(" ");
+                args[0] = stripZeroFromEnds(args[0]);
+                args[1] = stripZeroFromEnds(args[1]);
+
                 String first = "";
                 String second = "";
+               // System.out.println("args[0]  is :"+args[0] );
+                //System.out.println("args[1]  is :"+args[1] );
                 if(args[0].length() > args[1].length())
                 {
                    first = args[1];
@@ -40,6 +45,7 @@ public class Problem42 {
                 int carry = 0;
                 int j=0;
                 StringBuilder tempSum = new StringBuilder();
+               // System.out.println("first is : "+first+" and second is: "+second);
                 for(j=0; j<first.length(); j++)
                 {
                    int sum = first.charAt(j)-'0' + second.charAt(j)-'0' + carry;
@@ -56,15 +62,17 @@ public class Problem42 {
                 }
                 for(int k=j; k<second.length();k++)
                 {
-                    if(carry > 0)
+                    int sum = second.charAt(k)-'0' + carry;
+
+                    if(sum >= 10)
                     {
-                        int sum = second.charAt(j)-'0' + carry;
-                        carry = sum%10;
-                        tempSum.append(sum/10);
+                        carry = sum/10;
+                        tempSum.append(sum%10);
                     }
                     else
                     {
-                        tempSum.append(second.charAt(k));
+                        carry = 0;
+                        tempSum.append(sum);
                     }
                 }
                 if(carry>0)
@@ -77,6 +85,9 @@ public class Problem42 {
                     else
                         break;
                 }
+                if(l == tempSum.length() && l >0)
+                    l--;
+
                 out.append(tempSum.substring(l)).append("\n");
 
             }
@@ -86,7 +97,36 @@ public class Problem42 {
         }
         catch(Exception exc)
         {
-
+          exc.printStackTrace();
         }
+    }
+
+    private static String stripZeroFromEnds(String arg) {
+        int index = 0;
+
+        for(index=0; index<arg.length(); index++)
+        {
+            if(arg.charAt(index) != '0')
+                break;
+        }
+        if(index>arg.length()-1)
+        {
+            index=arg.length()-1;
+        }
+        arg = arg.substring(index);
+
+        for(index=arg.length()-1; index>=0; index--)
+        {
+            if(arg.charAt(index) != '0')
+                break;
+        }
+        if(index<0)
+        {
+            index=0;
+        }
+        arg = arg.substring(0, index+1);
+
+
+        return arg;
     }
 }
