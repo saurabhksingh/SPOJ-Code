@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
  * This file is created and owned by Saurabh Kr Singh (saurabh.nsit@gmail.com).
  * The code written here is being released under Apache 2.0 License
  */
-public class Problem5 {
+public class TheNextPalindrome {
     /**
      * A positive integer is called a palindrome if its representation in the decimal system is the same when
      read from left to right and from right to left. For a given positive integer K of not more than 1000000

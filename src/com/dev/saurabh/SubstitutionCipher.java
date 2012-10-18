@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
  * This file is created and owned by Saurabh Kr Singh (saurabh.nsit@gmail.com).
  * The code written here is being released under Apache 2.0 License
  */
-public class Problem44 {
+public class SubstitutionCipher {
     private static final String ERROR_MESSAGE="Message cannot be decrypted.";
     private static boolean firstOutput = true;
 
@@ -133,7 +133,7 @@ public class Problem44 {
         }
 
         V = new int[26];
-        for(int i=0; i<26;i++)V[i]=0;
+        //for(int i=0; i<26;i++)V[i]=0;
         level = 0;
         for(int v=0; v< alphabetAvailableCount; v++)
         {
@@ -146,7 +146,7 @@ public class Problem44 {
         for(int v=0; v< alphabetAvailableCount; v++)
         {
             V = new int[26];
-            for(int i=0; i<26;i++)V[i]=0;
+            //for(int i=0; i<26;i++)V[i]=0;
             result[v] = alphabetAvailableCount - dfsCount(alphabetsAdjMatrix, inverseSubstitute[v]);
         }
 

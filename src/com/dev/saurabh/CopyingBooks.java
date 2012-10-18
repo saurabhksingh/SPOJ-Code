@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
  * Time: 5:35 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Problem43 {
+public class CopyingBooks {
 
     private static long maxBookCount = 0;
     private static int scribeCount=0;

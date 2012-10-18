@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
  */
 
 //COMMEDIA
-public class Problem45
+public class CommediaDelArte
 {
     private static int [] tempArray = null;
     private static int emptyPosition;

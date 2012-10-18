@@ -12,7 +12,7 @@ import java.math.BigInteger;
  * This file is created and owned by Saurabh Kr Singh (saurabh.nsit@gmail.com).
  * The code written here is being released under Apache 2.0 License
  */
-public class Problem24 {
+public class SmallFactorials {
     /**
      * Small factorials
      */

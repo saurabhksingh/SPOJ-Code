@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * This file is created and owned by Saurabh Kr Singh (saurabh.nsit@gmail.com).
  * The code written here is being released under Apache 2.0 License
  */
-public class Problem1 {
+public class LifeUniverseAndEverything {
     /**
      * Your program is to use the brute-force approach in order to find the Answer to Life, the Universe, and
      Everything. More precisely... rewrite small numbers from input to output. Stop processing input after

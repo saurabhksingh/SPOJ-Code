@@ -14,7 +14,7 @@ import java.util.Stack;
  * This file is created and owned by Saurabh Kr Singh (saurabh.nsit@gmail.com).
  * The code written here is being released under Apache 2.0 License
  */
-public class Problem4 {
+public class TransformTheExpression {
     /**
      * Transform the algebraic expression with brackets into RPN form (Reverse Polish Notation).
      Two-argument operators: +, -, *, /, ^ (priority from the lowest to the highest), brackets ( ). Operands:
