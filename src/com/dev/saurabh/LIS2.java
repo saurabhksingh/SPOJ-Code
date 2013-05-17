@@ -2,6 +2,8 @@ package com.dev.saurabh;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Copyright (c)
@@ -13,64 +15,92 @@ import java.io.InputStreamReader;
  */
 public class LIS2 {
 
-    public static void main(String [] args) throws Exception
+    private static class Point
     {
-        BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-        int pairCount = Integer.parseInt(consoleReader.readLine());
+        private int x,y;
 
-        int [][] tailTable = new int[2][pairCount];
-        int [][] input = new int[2][pairCount];
-        String [] pair = consoleReader.readLine().split(" ");
-        tailTable[0][0] = Integer.parseInt(pair[0]);
-        tailTable[1][0] = Integer.parseInt(pair[1]);
-        input[0][0] = tailTable[0][0];
-        input[1][0] = tailTable[1][0];
-        int len = 1;
-
-        for(int i=1; i<pairCount; i++)
+        public Point(int x, int y)
         {
-            pair = consoleReader.readLine().split(" ");
-            int x = Integer.parseInt(pair[0]);
-            int y = Integer.parseInt(pair[1]);
-            input[0][i] = x;input[1][i] = y;
-
-            if( input[0][i] <= tailTable[0][0] && input[1][i] <= tailTable[1][0] )
-            {
-                tailTable[0][0] = input[0][i];
-                tailTable[1][0] = input[1][i];
-            }
-            else if( input[0][i] >= tailTable[0][len-1] &&  input[1][i] >= tailTable[1][len-1])
-            {
-                tailTable[0][len] = input[0][i];
-                tailTable[1][len] = input[1][i];
-                len++;
-            }
-            else
-            {
-                int upperIndex = getUpperIndex(tailTable, -1, len-1, input[0][i], input[1][i]);
-
-                tailTable[0][upperIndex] = input[0][upperIndex]; tailTable[1][upperIndex] = input[1][upperIndex];
-            }
+            this.x = x;
+            this.y = y;
         }
 
-        System.out.println(len);
+       @Override
+       public boolean equals(Object other)
+       {
+           Point otherPoint = (Point)other;
+           return (this.x == otherPoint.x && this.y == otherPoint.y);
+       }
+    }
+    public static void main(String [] args)
+    {
+        try
+        {
+            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+            int pairCount = Integer.parseInt(consoleReader.readLine());
+            if(pairCount <= 0)
+            {
+                System.out.println(0);
+                return;
+            }
+            Point [] sortedInput = new Point[pairCount];
+            Point [] input = new Point[pairCount];
+            String [] pair = null;
+
+            for(int i=0; i<pairCount; i++)
+            {
+                pair = consoleReader.readLine().split(" ");
+                int x = Integer.parseInt(pair[0]);
+                int y = Integer.parseInt(pair[1]);
+                Point currentPoint = new Point(x,y);
+                input [i] = currentPoint;
+                sortedInput [i] = currentPoint;
+            }
+
+            Arrays.sort(sortedInput, new Comparator<Point>() {
+                @Override
+                public int compare(Point point1, Point point2) {
+
+                    if(point1.x < point2.x && point1.y < point2.y)
+                    {
+                        return -1;
+                    }
+                    else if(point1.x == point2.x && point1.y == point2.y)
+                    {
+                        return 0;
+                    }
+
+                    return 1;
+                }
+            });
+            System.out.println(lcs(input, sortedInput));
+        }
+        catch(Exception exc)
+        {
+
+        }
     }
 
-    private static int getUpperIndex(int[][] tailTable, int l, int r, int x, int y) {
-        int m;
+    private static int lcs(Point[] input, Point[] sortedInput) {
 
-        while( r - l > 1 ) {
-            m = l + (r - l)/2;
-            if(tailTable[0][m] >= x && tailTable[1][m] >= y)
+        int [][] L = new int [input.length+1][sortedInput.length + 1];
+
+        for (int i=0; i<=input.length; i++)
+        {
+            for (int j=0; j<=sortedInput.length; j++)
             {
-               r = m;
-            }
-            else
-            {
-                l = m;
+                if (i == 0 || j == 0)
+                    L[i][j] = 0;
+
+                else if (input[i-1].equals(sortedInput[j-1]))
+                    L[i][j] = L[i-1][j-1] + 1;
+
+                else
+                    L[i][j] = Math.max(L[i-1][j], L[i][j-1]);
             }
         }
 
-        return r;
+        return L[input.length][sortedInput.length];
+
     }
 }
