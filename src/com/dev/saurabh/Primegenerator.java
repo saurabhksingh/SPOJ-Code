@@ -14,7 +14,7 @@ import java.util.List;
  * This file is created and owned by Saurabh Kr Singh (saurabh.nsit@gmail.com).
  * The code written here is being released under Apache 2.0 License
  */
-public class PrimeGenerator {
+public class Primegenerator {
     /**
      *
      * Peter wants to generate some prime numbers for his cryptosystem. Help him! Your task is to generate
